@@ -122,8 +122,9 @@ proc generate_dump978_config {config} {
 	switch -nocase [$config get uat-receiver-type] {
 		sdr {
 			set gain [$config get uat-sdr-gain]
-			if {$gain ne "max"} {
-				# default is max gain, only need to override if different
+			if {$gain eq "max"} {
+				lappend receiverOpts "--sdr-auto-gain"
+			} else {
 				lappend receiverOpts "--sdr-gain" $gain
 			}
 			set ppm [$config get uat-sdr-ppm]
